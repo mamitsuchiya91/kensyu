@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 public class CheckUtil {
 	private ArrayList<String> _errs = null;
 	
-	public CheckUtil{
+	CheckUtil(){
 		this._errs = new ArrayList<String>();
 	}
 	public void requiredCheck(String value, String name){
