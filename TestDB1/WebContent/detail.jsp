@@ -7,9 +7,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>タスクの詳細設定</title>
+<title>TODOタスクの詳細画面</title>
 <script type="text/javascript">
-window.onload = function(){
+window.onload = function() {
 	var status = document.getElementById("status");
 	status.selectedIndex = ${vo.status};
 };
@@ -23,7 +23,7 @@ window.onload = function(){
 		<td width="60">
 			<c:choose>
 				<c:when test="${vo.id > 0}">
-					<c:out value="${vo.id }" />
+					<c:out value="${vo.id}" />
 				</c:when>
 				<c:otherwise>
 					(新規)
@@ -33,65 +33,52 @@ window.onload = function(){
 	</tr>
 	<tr>
 		<th>タイトル</th>
-		<td><input type="text" name="title" value="<c:out value="${vo.title }" />" size="20" />
-		</td>
+		<td><input type="text" name="title" value="<c:out value="${vo.title}" />" size="20"/></td>
 	</tr>
 	<tr>
 		<th>タスク内容</th>
-		<td><input type="text" name="task" value="<c:out value="${vo.task }" />" maxlength="128" size="60" />
-		</td>
-	</tr>	
-	<tr>
-		<th>期限</th>
-		<td><input type="text" name="limitdate" value="<fmt:formatDate value="${vo.limitdate}" pattern="yyyy-MM-dd" />" maxlength="128" size="60" />
-		</td>
+		<td><input type="text" name="task" value="<c:out value="${vo.task}" />" maxlength="128" size="20"/></td>
 	</tr>
 	<tr>
-		<th>ユーザID</th>
-		<td><input type="text" name="userid" value="<c:out value="${vo.userid }" />" size="16" />
-		</td>
+		<th>期限</th>
+		<td><input type="text" name="limitdate" value="<fmt:formatDate value="${vo.limitdate}" pattern="yyyy-MM-dd" />"size="10"/></td>
+	</tr>
+	<tr>
+		<th>ユーザーID</th>
+		<td><input type="text" name="userid" value="<c:out value="${vo.userid}" />"size="16"/></td>
 	</tr>
 	<tr>
 		<th>状況</th>
-		<td>
-			<select name="status" id="status">
-				<option value="0">未着手</option>
-				<option value="1">着手</option>
-				<option value="2">完了</option>
-				<option value="3">凍結</option>
-			</select>
-		</td>
+		<td><select name="status" id="status">
+			<option value="0">未着手</option>
+			<option value="1">着手</option>
+			<option value="2">完了</option>
+			<option value="3">凍結</option>
+		</select></td>
 	</tr>
-<c:if test="${vo.id > 0 }">
-	<tr>
-		<th>添付ファイル</th>
-		<td>
-			<a href ="preUpload?id=<c:out value="${vo.id }" />">アップロード</a>
-			<c:choose>
-				<c:when test="${vo.filename != null}">
-					<c:out value="${vo.filename }" />
-					${message }
-				</c:when>
-				<c:otherwise>
-					添付ファイルはありません
-				</c:otherwise>
-			</c:choose>
+	<c:if test="${vo.id != 0}">
+	<tr><th>添付ファイル</th>
+		<td><a href="preUpload?id=<c:out value="${vo.id}"/>">アップロード</a>
+		<c:choose>
+			<c:when test="${vo.filename != null}">
+				<c:out value="${vo.filename}" />
+			</c:when>
+			<c:otherwise>添付ファイルはありません</c:otherwise>
+		</c:choose>
 		</td>
-	</tr>
-</c:if>
+	</tr></c:if>
 </table>
-<input type="hidden" name="id" value="<c:out value="${vo.id }" />" />
+<input type="hidden" name="id" value="<c:out value="${vo.id}" />" />
 <input type="submit" value="登録する" />
 </form>
-<c:if test="${vo.id > 0 }">
+<c:if test="${vo.id > 0}">
 <br />
 <form id="delete" action="delete" method="POST">
-<input type="hidden" name="id" value="<c:out value="${vo.id }" />" />
+<input type="hidden" name="id" value="<c:out value="${vo.id}" />" />
 <input type="submit" value="削除する" />
 </form>
 </c:if>
 <br />
-●<a href="search" >タスク一覧に戻る</a>
+●<a href="search">タスク一覧に戻る</a>
 </body>
-
 </html>
