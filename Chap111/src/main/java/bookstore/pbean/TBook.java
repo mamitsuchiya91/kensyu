@@ -9,6 +9,7 @@ public class TBook {
 	String author;
 	String publisher;
 	Integer price;
+	Integer sum;
 	
 	String userid;
 	String upass;
@@ -23,6 +24,13 @@ public class TBook {
 	
 	Integer order_id_fk;
 	Integer book_id_fk;
+	
+	public Integer getSum(){
+		return sum;
+	}
+	public void setSum(Integer sum){
+		this.sum = sum;
+	}
 	
 	public Integer getId(){
 		return id;

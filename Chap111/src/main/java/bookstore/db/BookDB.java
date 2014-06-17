@@ -26,42 +26,59 @@ public class BookDB extends BookDao{
 		}
 		return resultList;
 	}
-	//チェックされた商品と顧客情報を結びつけるメソッド
-	public List<TBook> getCostomer() throws Exception{
-		String sql = "id, costomer_id_fk FROM lecture.t_book LEFT JOIN lecture.t_order ON t_order.id = t_book_id";
+	public TBook findBookByISBN(String iterBookISBN)throws Exception{
+		String sql = "SELECT title, author, price, publisher, isbn, id FROM t_book where isbn = '"
+				+ iterBookISBN
+				+ "'";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet rs = statement.executeQuery();
-		List<TBook> resultList = new ArrayList<TBook>();	
+		TBook book = new TBook();
 		while (rs.next()){
-			TBook book = new TBook();
+			book.setTitle(rs.getString("title"));
+			book.setAuthor(rs.getString("author"));
+			book.setPrice(rs.getInt("price"));
+			book.setPublisher(rs.getString("publisher"));
+			book.setIsbn(rs.getString("isbn"));
 			book.setId(rs.getInt("id"));
-			book.setCostomer_id_fk(rs.getInt("costomer_id_fk"));
-			resultList.add(book);
+		}
+		return book;
+	}
+	
+	
+	public int getSum(List<String> cart) throws Exception{
+		String[] str = cart.toArray(new String[cart.size()]);
+		String arr = "";
+		for (String st: str){
+			arr +="'" + st +"',";
+		}
+		String sql = "SELECT SUM(price) sum from t_book where isbn in ("
+				+ arr
+				+ "'0')";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet rs = statement.executeQuery();
+		int resultList = 0;	
+		while (rs.next()){
+			resultList = rs.getInt("sum");
 		}
 		return resultList;
 	}
-	//isbn番号によって本の情報とを受け取る
-	public TBook sumISB(String iterBookISBN)throws Exception{
-		TBook tb = new TBook();
-		String sql = "INSERT INTO lecture.t_order_detail (order_id_fk, book_id_fk)" + "VALUES (?, ?)";
-		PreparedStatement statement = connection.prepareStatement(sql);
-		ResultSet rs = statement.executeQuery();		
-		while (rs.next()){
-			//book.setId(rs.getInt("id"));
+	public int registerInsert(TBook tb) throws Exception{
+		String sql = "INSERT INTO lecture.t_customer(userid, upass, uname, umail, uadd, utel )" + "VALUES (?, ?, ?, ?, ?, ?);";
+		int result = 0;
+		try{
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, tb.getUserid());
+			statement.setString(2, tb.getUpass());
+			statement.setString(3, tb.getUname());
+			statement.setString(4, tb.getUmail());
+			statement.setString(5, tb.getUadd());
+			statement.setString(6, tb.getUtel());
+			result = statement.executeUpdate();
+			connection.commit();
+		}catch (Exception e){
+			connection.rollback();
+			throw e;
 		}
-		return tb;
-	}
-	
-	
-	//選択されたもののpriceを呼び出して合計を出す
-	public TBook sumISBN(String iterBookISBN)throws Exception{
-		TBook tb = new TBook();
-		String sql = "INSERT INTO lecture.t_order_detail (order_id_fk, book_id_fk)" + "VALUES (?, ?)";
-		PreparedStatement statement = connection.prepareStatement(sql);
-		ResultSet rs = statement.executeQuery();		
-		while (rs.next()){
-			//book.setId(rs.getInt("id"));
-		}
-		return tb;
+		return result;
 	}
 }

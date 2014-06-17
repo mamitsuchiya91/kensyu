@@ -1,22 +1,27 @@
-<%@ page language="java" import ="java.util.Iterator" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page language="java" import ="java.util.List" %>
 <%@ page language="java" import ="bookstore.db.BookDB" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page language="java" import ="bookstore.pbean.TBook" %>
+<%@ taglib uri="/struts-tags" prefix="s" %>
 <html>
 <head></head>
 <body>
 <center>
 <h2>購入商品</h2>
 </center>
-<br><br>
+
+<br>
 以下が購入する商品と合計です。<br>
 <table border="1">
-	<%
-	List<String> listCheckedBook = (List<String>)session.getAttribute("CART");
-	if(listCheckedBook != null){
-		for(String iterBookISBN :listCheckedBook){
-			TBook book = (TBook)BookDB.findBookByISBN(iterBookISBN);
+<%	
+List<String> listCheckedBook = (List<String>)session.getAttribute("CART");
+String[] str = listCheckedBook.toArray(new String[listCheckedBook.size()]);
+BookDB bd = new BookDB();
+if(listCheckedBook != null){
+	for(String iterBookISBN :str){
+		try {
+			bd.getConnection();
+			TBook book = bd.findBookByISBN(iterBookISBN);
 	%>
 	<tr>
 		<td>
@@ -25,8 +30,8 @@
 		<td>
 		<%= book.getAuthor() %>
 		</td>
-	</tr>
-	<tr>
+		</tr>
+		<tr>
 		<td>
 		<%= book.getPublisher() %>
 		</td>
@@ -35,10 +40,14 @@
 		</td>
 	</tr>
 	<%
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	}
-	%>
-</table><br><br>
-合計：<%= request.getAttribute("TOTAL") %>円
+} %>
+</table>
+合計：
+<% out.println(request.getAttribute("SUM"));%>円
+<br>
 </body>
 </html>

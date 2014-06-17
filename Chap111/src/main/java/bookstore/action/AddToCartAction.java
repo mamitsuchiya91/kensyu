@@ -21,7 +21,7 @@ import bookstore.pbean.TBook;
 	@Result (name="checkout", location="checkout.jsp")
 })
 public class AddToCartAction implements ServletRequestAware {
-	//liblistは全書籍のデータを格納しておくリスト
+	//lblistは全書籍のデータを格納しておくリスト
 	private List<TBook> lblist;
 	private HttpServletRequest request;
 	private String[] selecteditems = null;
@@ -30,7 +30,6 @@ public class AddToCartAction implements ServletRequestAware {
 		HttpSession session = request.getSession();
 		//初期化
 		session.removeAttribute("CART");
-		
 		if(selecteditems != null && selecteditems.length != 0){
 			//cartに入れるためにarraysオブジェクトにかえる
 			List<String> cart = Arrays.asList(selecteditems);
@@ -41,32 +40,25 @@ public class AddToCartAction implements ServletRequestAware {
 		try {
 			bookdb.getConnection();
 			lblist = bookdb.getListBook();
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return ("addtocart");
 	}
-	
-	
 	public String checkout(){
 		HttpSession httpsession = request.getSession(false);
 		//cartに入っている情報を取得
-		List<String> cart = (List<String>) httpsession.getAttribute("CART");
-		int id = Integer.parseInt(request.getParameter("id"));
-		
+		List<String> cart = (List<String>)httpsession.getAttribute("CART");
 		BookDB bookdb = new BookDB();
+		int sum = 0;
 		try {
 			bookdb.getConnection();
-			//lblist = bookdb.getListBook();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		//cartに入っているもののpriceを合計する
-		//合計値はTOTALに格納する
-		//request.setAttribute("TOTAL", total);
+			sum = bookdb.getSum(cart);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		request.setAttribute("SUM", sum);
 		return ("checkout");
-			
 	}
 	
 	public List<TBook> getLblist(){
