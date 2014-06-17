@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context displayName="Test" docBase="TestDB1"
-  path="TestDB1" reloadable="true">
-<Realm className="org.apache.catalina.realm.DataSourceRealm"
+<Context displayName="Test" 
+	docBase="TestDB1"
+	path="TestDB1" 
+	reloadable="true">
+  <Realm className="org.apache.catalina.realm.DataSourceRealm"
     dataSourceName="jdbc/dbtest" localDataSource="true" digest="MD5"
     roleNameCol="rolename" userCredCol="userpass" userNameCol="username"
     userRoleTable="auth_roles" userTable="auth_users" />

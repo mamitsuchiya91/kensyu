@@ -10,13 +10,10 @@
 <title>ログイン画面</title>
 </head>
 <body>
-
-
 <form method="post" action="auth">
-<%= request.getRemoteUser() %>
 <table>
 	<tr>
-		<td>データID</td>
+		<td>ユーザID</td>
 		<td><input type="text" name="j_username"></td>
 	</tr>
 	<tr>
