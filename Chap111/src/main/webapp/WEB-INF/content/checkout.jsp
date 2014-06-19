@@ -48,6 +48,9 @@ if(listCheckedBook != null){
 </table>
 合計：
 <% out.println(request.getAttribute("SUM"));%>円
+<s:form action="/Download" method="post">
+<s:submit value="ダウンロード" method="download" theme="simple" />
+</s:form>
 <br>
 </body>
 </html>

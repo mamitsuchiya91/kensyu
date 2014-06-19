@@ -22,6 +22,7 @@
 <input type="submit" value="ログイン" name="submit">
 <input type="reset" value="リセット" name="submit">
 </form>
-●<a href="Signup">新規登録</a>
+<a href ="signup">新規登録</a>
+<a href ="manager">管理者画面へ</a>
 </body>
 </html>

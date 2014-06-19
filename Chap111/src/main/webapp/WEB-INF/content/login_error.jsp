@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-エラー
-<a href="JacaScript:history.back();">戻る</a>
+エラ
+<a href="index.jsp">戻る</a>
 </body>
 </html>

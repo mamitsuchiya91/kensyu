@@ -10,12 +10,15 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
+import bookstore.mail.SimpleMailSender;
 import bookstore.db.BookDB;
 import bookstore.pbean.TBook;
 
 @Results({
 	@Result (name="register", location="login.jsp"),
-	@Result (name="signup", location="signup.jsp")
+	@Result (name="signup", location="signup.jsp"),
+	@Result (name="newinsert", location="newbook.jsp"),
+	@Result (name="booknew", location="newbook.jsp")
 })
 public class RegisterAction implements ServletRequestAware {
 	private String userid;
@@ -24,6 +27,13 @@ public class RegisterAction implements ServletRequestAware {
 	private String umail;
 	private String uadd;
 	private String utel;
+	
+	private String title;
+	private String isbn;
+	private String author;
+	private String publisher;
+	private Integer price;
+	
 	private HttpServletRequest request;
 	@Action("/Register")
 	public String register(){
@@ -43,7 +53,7 @@ public class RegisterAction implements ServletRequestAware {
 		}
 		return "register";
 	}
-	@Action("/Signup")
+	
 	public String signup(){
 		return "signup";
 	}
@@ -63,7 +73,56 @@ public class RegisterAction implements ServletRequestAware {
 	        }
 	        return rtn;
 	    }
-	
+	public String booknew(){
+		return "booknew";
+	}
+	public String newbook(){
+		TBook tb = new TBook();
+		tb.setTitle(title);
+		tb.setIsbn(isbn);
+		tb.setAuthor(author);
+		tb.setPublisher(publisher);
+		tb.setPrice(price);
+
+		BookDB bookdb = new BookDB();
+		try {
+			bookdb.getConnection();
+			bookdb.newbooker(tb);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "newinsert";
+	}
+	public String getIsbn(){
+		return isbn;
+	}
+	public void setIsbn(String isbn){
+		this.isbn = isbn;
+	}
+	public String getTitle(){
+		return title;
+	}
+	public void setTitle(String title){
+		this.title = title;
+	}
+	public String getAuthor(){
+		return author;
+	}
+	public void setAuthor(String author){
+		this.author = author;
+	}
+	public String getPublisher(){
+		return publisher;
+	}
+	public void setPublisher(String publisher){
+		this.publisher = publisher;
+	}
+	public Integer getPrice(){
+		return price;
+	}
+	public void setPrice(Integer price){
+		this.price = price;
+	}
 	public String getUserid(){
 		return userid;
 	}

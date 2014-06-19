@@ -14,7 +14,6 @@ public class BookDao {
 				InitialContext initCtx = new InitialContext();
 				DataSource ds = (DataSource) initCtx.lookup("java:comp/env/jdbc/dbtest");
 				connection = ds.getConnection();
-				//connection.close();
 				connection.setAutoCommit(false);
 				}
 		}catch(Exception e) {

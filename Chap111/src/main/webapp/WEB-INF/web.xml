@@ -20,16 +20,29 @@
     </web-resource-collection>
     <auth-constraint>
       <role-name>roles</role-name>
+      <role-name>manager</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Chap111</web-resource-name>
+      <url-pattern>/WEB-INF/content/manager.jsp</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>manager</role-name>
     </auth-constraint>
   </security-constraint>
   <login-config>
     <auth-method>FORM</auth-method>
     <form-login-config>
       <form-login-page>/WEB-INF/content/login.jsp</form-login-page>
-      <form-error-page>/login_error.jsp</form-error-page>
+      <form-error-page>/WEB-INF/content/login_error.jsp</form-error-page>
     </form-login-config>
   </login-config>
   <security-role>
     <role-name>roles</role-name>
+  </security-role>
+  <security-role>
+    <role-name>manager</role-name>
   </security-role>
 </web-app>

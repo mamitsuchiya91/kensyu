@@ -11,7 +11,7 @@
 <body>
 <s:form action="/Addtoaction" method="post">
 <table border="1">
-	<tr><th>作品名</th><th>著作名</th><th>価格</th><th>選択</th><th>
+	<tr><th>作品名</th><th>著作名</th><th>価格</th><th>選択</th></tr>
 	<s:iterator value="lblist">
 	<tr>
 		<td>
@@ -38,6 +38,9 @@
 	</table>
 	<s:submit value="カートに追加" method="addtocart" theme="simple" />
 	<s:submit value="会計" method="checkout" theme="simple" />
+</s:form>
+<s:form action="/Detail" method="post">
+<s:submit value="カート追加した商品を見る" method="detail" theme="simple" />
 </s:form>
 </body>
 </html>

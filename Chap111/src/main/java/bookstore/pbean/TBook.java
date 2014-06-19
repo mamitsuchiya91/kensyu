@@ -31,7 +31,12 @@ public class TBook {
 	public void setSum(Integer sum){
 		this.sum = sum;
 	}
-	
+	public Timestamp getOrderday(){
+		return orderday;
+	}
+	public void setOrderday(Timestamp orderday){
+		this.orderday = orderday;
+	}	
 	public Integer getId(){
 		return id;
 	}
